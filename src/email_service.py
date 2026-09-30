@@ -9,7 +9,7 @@ NOTIFICATION_EMAIL = os.getenv("NOTIFICATION_EMAIL")
 async def send_hot_lead_email(lead, score):
     payload = {
         "from": "onboarding@resend.dev",
-        "to": ["delivered@resend.dev"],
+        "to": [NOTIFICATION_EMAIL],
         "subject": f"Hot Lead: {lead.company}",
         "html": f"""
         <h2>New High-Priority Lead</h2>
