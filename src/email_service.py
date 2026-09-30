@@ -1,15 +1,13 @@
 import os
-import resend
+import httpx
 
 
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")
 NOTIFICATION_EMAIL = os.getenv("NOTIFICATION_EMAIL")
 
-resend.api_key = RESEND_API_KEY
-
 
 async def send_hot_lead_email(lead, score):
-    params: resend.Emails.SendParams = {
+    payload = {
         "from": "onboarding@resend.dev",
         "to": [NOTIFICATION_EMAIL],
         "subject": f"Hot Lead: {lead.company}",
@@ -28,7 +26,20 @@ async def send_hot_lead_email(lead, score):
         """
     }
 
-    return await resend.Emails.send_async(params)
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            "https://api.resend.com/emails",
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json=payload,
+            timeout=15
+        )
+
+        response.raise_for_status()
+
+        return response.json()
 # import os
 # import aiosmtplib
 # from email.message import EmailMessage
