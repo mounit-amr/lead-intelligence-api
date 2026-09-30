@@ -50,10 +50,13 @@ async def score_lead_endpoint(
     result = score_lead(lead)
 
     if result["priority"] == "high":
-        await send_hot_lead_email(
-            lead,
-            result["score"]
-        )
+        try:
+            await send_hot_lead_email(
+                lead,
+                result["score"]
+            )
+        except Exception as e:
+            print(f"Email notificaton failed: {e}")
 
     return {
         "lead_id": lead.lead_id,
@@ -199,10 +202,13 @@ async def lead_webhook(
     result = score_lead(lead)
 
     if result["priority"] == "high":
-        await send_hot_lead_email(
-            lead,
-            result["score"]
-        )
+        try:
+            await send_hot_lead_email(
+                lead,
+                result["score"]
+            )
+        except Exception as e:
+            print(f"Email notification failed: {e}")
 
     return {
         "message": "Lead received successfully",
