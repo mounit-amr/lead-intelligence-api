@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI, UploadFile, File,Header, HTTPException
-from src.schemas import Lead
+from fastapi.responses import FileResponse
+from src.schemas import Lead, ICP
 from src.scoring import score_lead
 from src.email_service import send_hot_lead_email
 from typing import List
@@ -212,6 +213,43 @@ async def lead_webhook(
 
     return {
         "message": "Lead received successfully",
+        "lead_id": lead.lead_id,
+        **result
+    }
+
+@app.get("/demo")
+def demo():
+    return FileResponse("static/demo.html")
+
+@app.post("/demo/score")
+def demo_score(lead: Lead):
+    result = score_lead(lead)
+    
+    if result["score"] >= 75:
+        action = "Contact this lead immediately"
+        
+    elif result["score"] >= 50:
+        action = "Follow up soon"
+    
+    else:
+        action = "Add to nurture campaign"
+        
+    return {
+        **result, 
+        "recommended_action" : action
+    }
+    
+@app.post("/score/custom")
+def customscor(
+    lead: Lead,
+    icp: ICP,
+    x_api_key: str | None = Header(default=None) 
+               ):
+    
+    verify_api_key(x_api_key)
+    result = score_lead(lead,icp)
+    
+    return{
         "lead_id": lead.lead_id,
         **result
     }

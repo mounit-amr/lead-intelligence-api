@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Lead Intelligence</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 25px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0f0f0;
+            display: none;
+        }
+
+        .score {
+            font-size: 36px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Lead Intelligence</h1>
+
+    <div class="subtitle">
+        Automatically identify your highest-value leads.
+    </div>
+
+    <label>Company</label>
+    <input id="company" value="TechNova Solutions">
+
+    <label>Industry</label>
+    <input id="industry" value="Software">
+
+    <label>Employees</label>
+    <input id="employees" type="number" value="120">
+
+    <label>Country</label>
+    <input id="country" value="India">
+
+    <label>Revenue</label>
+    <input id="revenue" type="number" value="5000000">
+
+    <label>Funding</label>
+    <input id="funding" type="number" value="1000000">
+
+    <button onclick="scoreLead()">Score Lead</button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+async function scoreLead() {
+
+    const lead = {
+        lead_id: "DEMO001",
+        company: document.getElementById("company").value,
+        industry: document.getElementById("industry").value,
+        employees: Number(document.getElementById("employees").value),
+        country: document.getElementById("country").value,
+        revenue: Number(document.getElementById("revenue").value),
+        funding: Number(document.getElementById("funding").value)
+    };
+
+    const response = await fetch("/demo/score", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(lead)
+    });
+
+    const data = await response.json();
+
+    const result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    result.innerHTML = `
+        <div class="score">${data.score}/100</div>
+
+        <h2>${data.priority.toUpperCase()} PRIORITY</h2>
+
+        <p>
+            <strong>Probability:</strong>
+            ${(data.probability * 100).toFixed(0)}%
+        </p>
+
+        <h3>Why?</h3>
+
+        <ul>
+            ${data.reasons.map(reason => `<li>${reason}</li>`).join("")}
+        </ul>
+
+        <h3>Recommended Action</h3>
+
+        <p>${data.recommended_action}</p>
+    `;
+}
+
+</script>
+
+</body>
+</html>
