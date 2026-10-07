@@ -43,7 +43,7 @@ def score_lead(lead:Lead,icp:ICP):
 
     
     if icp.funding_min is not None:
-        max_score += icp.funding_min
+        max_score += icp.funding_weight
         if lead.funding >= icp.funding_min:
             score += icp.funding_weight
             reasons.append("Funding meets the minimum requirement")
