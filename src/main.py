@@ -16,6 +16,15 @@ app = FastAPI(
 
 API_KEY = os.getenv("API_KEY")
 
+DEFAULT_ICP = ICP(
+    industries=["Software", "SaaS", "IT", "CyberSecurity"],
+    countries=["India"],
+    employees_min=50,
+    revenue_min=1_000_000,
+    funding_min=500_000,
+    budget_min=500_000
+)
+
 def verify_api_key(x_api_key: str | None):
     if not API_KEY:
         raise HTTPException(
@@ -48,7 +57,7 @@ async def score_lead_endpoint(
 ):
     verify_api_key(x_api_key)
 
-    result = score_lead(lead)
+    result = score_lead(lead, DEFAULT_ICP)
 
     if result["priority"] == "high":
         try:
@@ -71,7 +80,7 @@ def qualify_lead(
 ):
     verify_api_key(x_api_key)
 
-    result = score_lead(lead)
+    result = score_lead(lead, DEFAULT_ICP)
 
     if result["score"] >= 75:
         action = "Contact immediately"
@@ -101,7 +110,7 @@ def score_batch(
     results = []
 
     for lead in leads:
-        result = score_lead(lead)
+        result = score_lead(lead, DEFAULT_ICP)
 
         results.append({
             "lead_id": lead.lead_id,
@@ -181,7 +190,7 @@ async def score_csv(
                 detail=f"Invalid lead data: {str(e)}"
             )
 
-        result = score_lead(lead)
+        result = score_lead(lead, DEFAULT_ICP)
 
         results.append({
             "lead_id": lead.lead_id,
@@ -200,7 +209,7 @@ async def lead_webhook(
 ):
     verify_api_key(x_api_key)
 
-    result = score_lead(lead)
+    result = score_lead(lead, DEFAULT_ICP)
 
     if result["priority"] == "high":
         try:
@@ -223,7 +232,7 @@ def demo():
 
 @app.post("/demo/score")
 def demo_score(lead: Lead):
-    result = score_lead(lead)
+    result = score_lead(lead, DEFAULT_ICP)
     
     if result["score"] >= 75:
         action = "Contact this lead immediately"

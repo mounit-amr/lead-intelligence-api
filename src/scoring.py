@@ -115,5 +115,5 @@ def score_lead(lead:Lead,icp:ICP):
         "classification": classification,
         "priority" : priority,
         "reasons": reasons,
-        "recommeded_action": recommended_action
+        "recommended_action": recommended_action
     }
