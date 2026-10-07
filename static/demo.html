@@ -91,6 +91,9 @@
     <label>Funding</label>
     <input id="funding" type="number" value="1000000">
 
+    <label>Budget</label>
+    <input id = "budget" type="number" value="1000000">
+
     <button onclick="scoreLead()">Score Lead</button>
 
     <div id="result"></div>
@@ -108,7 +111,8 @@ async function scoreLead() {
         employees: Number(document.getElementById("employees").value),
         country: document.getElementById("country").value,
         revenue: Number(document.getElementById("revenue").value),
-        funding: Number(document.getElementById("funding").value)
+        funding: Number(document.getElementById("funding").value),
+        budget: Number(document.getElementById("budget").value)
     };
 
     const response = await fetch("/demo/score", {
