@@ -1,64 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>AI Lead Intelligence</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lead Intelligence</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            background: #f7f8fc;
+            color: #111827;
             margin: 0;
-            padding: 40px;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 760px;
             margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #eef2ff;
+            color: #4f46e5;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
         }
 
         h1 {
-            margin-bottom: 5px;
+            font-size: 36px;
+            margin: 0 0 10px;
         }
 
         .subtitle {
-            color: #666;
-            margin-bottom: 25px;
+            color: #6b7280;
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
         }
 
         label {
-            display: block;
-            margin-top: 15px;
+            font-size: 14px;
             font-weight: bold;
+            margin-bottom: 7px;
+            color: #374151;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #4f46e5;
+        }
+
+        .full {
+            grid-column: span 2;
         }
 
         button {
             width: 100%;
-            padding: 13px;
+            padding: 14px;
             margin-top: 25px;
-            cursor: pointer;
+            border: none;
+            border-radius: 9px;
+            background: #4f46e5;
+            color: white;
             font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        button:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
         }
 
         #result {
             margin-top: 25px;
-            padding: 20px;
-            background: #f0f0f0;
             display: none;
         }
 
+        .result-card {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .score-section {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
         .score {
-            font-size: 36px;
+            font-size: 52px;
             font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .priority {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .result-section {
+            margin-top: 22px;
+        }
+
+        .result-section h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .action {
+            background: #eef2ff;
+            padding: 15px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #b91c1c;
+            padding: 15px;
+            border-radius: 9px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 25px 15px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: span 1;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
         }
     </style>
 </head>
@@ -67,88 +216,244 @@
 
 <div class="container">
 
-    <h1>AI Lead Intelligence</h1>
+    <div class="header">
 
-    <div class="subtitle">
-        Automatically identify your highest-value leads.
+        <div class="badge">
+            AI-POWERED LEAD QUALIFICATION
+        </div>
+
+        <h1>Lead Intelligence</h1>
+
+        <div class="subtitle">
+            Identify your highest-value leads and know who your sales team should contact first.
+        </div>
+
     </div>
 
-    <label>Company</label>
-    <input id="company" value="TechNova Solutions">
 
-    <label>Industry</label>
-    <input id="industry" value="Software">
+    <div class="card">
 
-    <label>Employees</label>
-    <input id="employees" type="number" value="120">
+        <div class="section-title">
+            Analyze a Lead
+        </div>
 
-    <label>Country</label>
-    <input id="country" value="India">
+        <div class="grid">
 
-    <label>Revenue</label>
-    <input id="revenue" type="number" value="5000000">
+            <div class="field full">
+                <label>Company</label>
+                <input id="company" value="TechNova Solutions">
+            </div>
 
-    <label>Funding</label>
-    <input id="funding" type="number" value="1000000">
+            <div class="field">
+                <label>Industry</label>
+                <input id="industry" value="Software">
+            </div>
 
-    <label>Budget</label>
-    <input id = "budget" type="number" value="1000000">
+            <div class="field">
+                <label>Country</label>
+                <input id="country" value="India">
+            </div>
 
-    <button onclick="scoreLead()">Score Lead</button>
+            <div class="field">
+                <label>Employees</label>
+                <input id="employees" type="number" value="120">
+            </div>
 
-    <div id="result"></div>
+            <div class="field">
+                <label>Revenue</label>
+                <input id="revenue" type="number" value="5000000">
+            </div>
+
+            <div class="field">
+                <label>Funding</label>
+                <input id="funding" type="number" value="1000000">
+            </div>
+
+            <div class="field">
+                <label>Budget</label>
+                <input id="budget" type="number" value="1000000">
+            </div>
+
+        </div>
+
+        <button id="scoreButton" onclick="scoreLead()">
+            Analyze Lead
+        </button>
+
+        <div id="result"></div>
+
+    </div>
+
+
+    <div class="footer">
+        Lead qualification and prioritization powered by your configured ICP.
+    </div>
 
 </div>
+
 
 <script>
 
 async function scoreLead() {
 
-    const lead = {
-        lead_id: "DEMO001",
-        company: document.getElementById("company").value,
-        industry: document.getElementById("industry").value,
-        employees: Number(document.getElementById("employees").value),
-        country: document.getElementById("country").value,
-        revenue: Number(document.getElementById("revenue").value),
-        funding: Number(document.getElementById("funding").value),
-        budget: Number(document.getElementById("budget").value)
-    };
-
-    const response = await fetch("/demo/score", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(lead)
-    });
-
-    const data = await response.json();
-
+    const button = document.getElementById("scoreButton");
     const result = document.getElementById("result");
 
-    result.style.display = "block";
+    button.disabled = true;
+    button.innerText = "Analyzing...";
 
-    result.innerHTML = `
-        <div class="score">${data.score}/100</div>
+    result.style.display = "none";
 
-        <h2>${data.priority.toUpperCase()} PRIORITY</h2>
+    const lead = {
+        lead_id: "DEMO001",
 
-        <p>
-            <strong>Probability:</strong>
-            ${(data.probability * 100).toFixed(0)}%
-        </p>
+        company: document.getElementById("company").value,
 
-        <h3>Why?</h3>
+        industry: document.getElementById("industry").value,
 
-        <ul>
-            ${data.reasons.map(reason => `<li>${reason}</li>`).join("")}
-        </ul>
+        employees: Number(
+            document.getElementById("employees").value
+        ),
 
-        <h3>Recommended Action</h3>
+        country: document.getElementById("country").value,
 
-        <p>${data.recommended_action}</p>
-    `;
+        revenue: Number(
+            document.getElementById("revenue").value
+        ),
+
+        funding: Number(
+            document.getElementById("funding").value
+        ),
+
+        budget: Number(
+            document.getElementById("budget").value
+        )
+    };
+
+
+    try {
+
+        const response = await fetch("/demo/score", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(lead)
+
+        });
+
+
+        const data = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail || "Unable to analyze lead"
+            );
+
+        }
+
+
+        const priority =
+            data.priority.toUpperCase();
+
+
+        result.style.display = "block";
+
+
+        result.innerHTML = `
+
+            <div class="result-card">
+
+                <div class="score-section">
+
+                    <div class="score">
+                        ${data.score}/100
+                    </div>
+
+                    <div class="priority">
+                        ${priority} PRIORITY
+                    </div>
+
+                </div>
+
+
+                <div class="result-section">
+
+                    <h3>Conversion Probability</h3>
+
+                    <p>
+                        ${(data.probability * 100).toFixed(0)}%
+                    </p>
+
+                </div>
+
+
+                <div class="result-section">
+
+                    <h3>Why this lead scored this way</h3>
+
+                    <ul>
+
+                        ${
+                            data.reasons
+                                .map(
+                                    reason =>
+                                        `<li>✓ ${reason}</li>`
+                                )
+                                .join("")
+                        }
+
+                    </ul>
+
+                </div>
+
+
+                <div class="result-section">
+
+                    <h3>Recommended Action</h3>
+
+                    <div class="action">
+
+                        ${data.recommended_action}
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+    }
+
+    catch (error) {
+
+        result.style.display = "block";
+
+        result.innerHTML = `
+
+            <div class="error">
+
+                ${error.message}
+
+            </div>
+
+        `;
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+        button.innerText = "Analyze Lead";
+
+    }
+
 }
 
 </script>
